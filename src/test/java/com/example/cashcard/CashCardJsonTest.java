@@ -1,21 +1,22 @@
 package com.example.cashcard;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
+
 
 @JsonTest
 public class CashCardJsonTest {
 
     @Autowired
     private JacksonTester<CashCard> json;
+
 
     @Test
     public void myFirstTest() {
@@ -25,6 +26,7 @@ public class CashCardJsonTest {
     @Test
     void testSerialize() throws IOException {
         CashCard cashCard = new CashCard(99L, 123.45);
+
         //read the expected JSON from a file
         String expectedJson = new String(Files.readAllBytes(Paths.get("src/test/resources/expected.json")));
 
@@ -52,8 +54,9 @@ public class CashCardJsonTest {
         assertThat(json.parse(expected))
                 .isEqualTo(new CashCard(99L, 123.45));
         //verify that the JSON has a id field with a specific value equals 1000
-        assertThat(json.parseObject(expected).id()).isEqualTo(99L);
+        assertThat(json.parseObject(expected).getId()).isEqualTo(99L);
         //verify that the JSON has a amount field with a specific value equals 67.89
-        assertThat(json.parseObject(expected).amount()).isEqualTo(123.45);
+        assertThat(json.parseObject(expected).getAmount()).isEqualTo(123.45);
     }
+
 }

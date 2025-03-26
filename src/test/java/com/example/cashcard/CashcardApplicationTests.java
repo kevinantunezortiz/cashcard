@@ -18,8 +18,14 @@ class CashcardApplicationTests {
     @Autowired
     TestRestTemplate restTemplate;
 
+    @Autowired
+    CashCardRepository repository;
+
     @Test
     void shouldReturnACashCardWhenDataIsSaved() {
+        CashCard cashCard = new CashCard(99L, 123.45);
+        repository.save(cashCard);
+
         ResponseEntity<String> response = restTemplate.getForEntity("/cashcards/99", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         DocumentContext documentContext = JsonPath.parse(response.getBody());
